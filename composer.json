@@ -1,18 +1,18 @@
 {
-    "name": ":vendor/:package_name",
+    "name": "aptarus/php_prom",
     "type": "library",
     "description": ":package_description",
     "keywords": [
-        ":vendor",
-        ":package_name"
+        "aptarus",
+        "php_prom"
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/aptarus/php_prom",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
+            "name": "Kevin Lyda",
+            "email": "kevin.lyda@aptarus.com",
+            "homepage": "https://www.aptarus.com/",
             "role": "Developer"
         }
     ],
@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            ":vendor\\:package_name\\": "src"
+            "aptarus\\php_prom\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            ":vendor\\:package_name\\": "tests"
+            "aptarus\\php_prom\\": "tests"
         }
     },
     "scripts": {
