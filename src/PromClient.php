@@ -9,7 +9,7 @@ class Configuration
         // Block it from being instantiated.
     }
 
-    public static $storage_dir = '/var/lib/php_prom/default';
+    public static $storage_dir = '/var/lib/promClientPhp/default';
 
 }
 

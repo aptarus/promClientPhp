@@ -1,13 +1,13 @@
 {
-    "name": "aptarus/php_prom",
+    "name": "aptarus/promClientPhp",
     "type": "library",
     "description": "Prometheus client library for PHP.",
     "keywords": [
         "aptarus",
         "prometheus",
-        "php_prom"
+        "promClientPhp"
     ],
-    "homepage": "https://github.com/aptarus/php_prom",
+    "homepage": "https://github.com/aptarus/promClientPhp",
     "license": "MIT",
     "authors": [
         {
@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "aptarus\\php_prom\\": "src"
+            "aptarus\\promClientPhp\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "aptarus\\php_prom\\": "tests"
+            "aptarus\\promClientPhp\\": "tests"
         }
     },
     "scripts": {

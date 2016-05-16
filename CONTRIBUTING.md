@@ -3,7 +3,7 @@
 Contributions are **welcome** and will be fully **credited**.
 
 We accept contributions via Pull Requests on
-[Github](https://github.com/aptarus/php_prom).
+[Github](https://github.com/aptarus/promClientPhp).
 
 
 ## Pull Requests
