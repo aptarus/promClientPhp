@@ -2,46 +2,91 @@
 
 namespace PromClient;
 
-class Counter
+class Configuration
 {
-    /**
-     * Create a new Counter Instance
-     */
-    public function __construct()
+    private function __construct()
     {
-        // constructor body
+        // Block it from being instantiated.
+    }
+
+    public static $storage_dir = '/var/lib/php_prom/default';
+
+}
+
+class Metric
+{
+    public function __construct($typ, $var, $help = "", $labels = [])
+    {
+        $this->typ = $typ;
+        $this->var = $var;
+        $this->help = $help;
+        $this->labels = $labels;
+        $this->label_values = [];
+        $this->var_value = 0; // TODO: Need to read this from disk.
+    }
+
+    public function _metric_inc($label_values, $value)
+    {
+        if (count($this->label_values) == count($this->labels))
+        {
+            // Write metrics.
+            $this->label_values = [];
+        } else {
+            // Raise exception.
+        }
+    }
+
+    public function _metric_labels($label_values)
+    {
+        $this->label_values = $label_values;
+        return $this;
+    }
+}
+
+class Counter extends Metric
+{
+    public function __construct($var, $help = "", $labels = [])
+    {
+        parent::__construct('counter', $var, $help, $labels);
     }
 
     public function inc($value = 1)
     {
-        // Increment the counter.
+        $this->_metric_inc($value);
+    }
+
+    public function labels($label_values)
+    {
+        return $this->_metric_labels($label_values);
     }
 }
 
 
-class Gauge
+class Gauge extends Metric
 {
-    /**
-     * Create a new Gauge Instance
-     */
-    public function __construct()
+    public function __construct($var, $help = "", $labels = [])
     {
-        // constructor body
+        parent::__construct('gauge', $var, $help, $labels);
     }
 
     public function inc($value = 1)
     {
-        // Increment the gauge.
+        $this->_metric_inc($value);
     }
 
     public function dec($value = 1)
     {
-        // Decrement the gauge.
+        $this->_metric_dec($value);
     }
 
     public function set($value)
     {
-        // Set the gauge.
+        $this->_metric_set($value);
+    }
+
+    public function labels($label_values)
+    {
+        return $this->_metric_labels($label_values);
     }
 }
 
