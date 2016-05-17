@@ -2,17 +2,6 @@
 
 namespace Aptarus\PromClient;
 
-class Configuration
-{
-    private function __construct()
-    {
-        // Block it from being instantiated.
-    }
-
-    public static $storage_dir = '/var/lib/promClientPhp/default';
-
-}
-
 class Metric
 {
     public function __construct($typ, $var, $help = "", $labels = [])
