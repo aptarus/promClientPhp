@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Aptarus\\PromClient\\": "src/"
+            "Aptarus\\PromClient\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Aptarus\\PromClientTests\\": "tests/"
+            "Aptarus\\PromClientTests\\": "tests"
         }
     },
     "scripts": {
