@@ -26,7 +26,8 @@ class Gauge extends Metric
 
     public function labels($label_values)
     {
-        return $this->_metric_labels($label_values);
+        $this->_metric_labels($label_values);
+        return $this;
     }
 }
 
