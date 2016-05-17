@@ -1,6 +1,6 @@
 <?php
 
-namespace Aptarus\PromClientPhp\PromClient;
+namespace PromClient;
 
 class Configuration
 {

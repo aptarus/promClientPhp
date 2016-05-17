@@ -1,6 +1,6 @@
 <?php
 
-namespace PromClient;
+namespace PromClientTest;
 
 class ExampleTest extends \PHPUnit_Framework_TestCase
 {
