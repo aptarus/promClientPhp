@@ -20,6 +20,19 @@ class Metric
         if (count($this->label_values) == count($this->labels))
         {
             // Write metrics.
+            print("Reading $var from " . Configuration::$storage_dir . "\n");
+            print("Writing $var to " . Configuration::$storage_dir . "\n");
+            $this->label_values = [];
+        } else {
+            // Raise exception.
+        }
+    }
+
+    public function _metric_set($label_values, $value)
+    {
+        if (count($this->label_values) == count($this->labels))
+        {
+            // Write metrics.
             print("Writing $var to " . Configuration::$storage_dir . "\n");
             $this->label_values = [];
         } else {

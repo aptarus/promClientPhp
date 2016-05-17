@@ -16,7 +16,7 @@ class Gauge extends Metric
 
     public function dec($value = 1)
     {
-        $this->_metric_dec($value);
+        $this->_metric_inc(-$value);
     }
 
     public function set($value)
