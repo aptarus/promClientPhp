@@ -1,6 +1,6 @@
 <?php
 
-namespace PromClientTest;
+namespace Aptarus\PromClientTest;
 
 class ExampleTest extends \PHPUnit_Framework_TestCase
 {
