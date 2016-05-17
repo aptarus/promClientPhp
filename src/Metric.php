@@ -12,7 +12,7 @@ class Metric
         $this->labels = $labels;
         $this->label_values = [];
         $this->var_value = 0; // TODO: Need to read this from disk.
-        print("Reading $var from " . Configuration::storage_dir . "\n");
+        print("Reading $var from " . Configuration::$storage_dir . "\n");
     }
 
     public function _metric_inc($label_values, $value)
@@ -20,7 +20,7 @@ class Metric
         if (count($this->label_values) == count($this->labels))
         {
             // Write metrics.
-            print("Writing $var to " . Configuration::storage_dir . "\n");
+            print("Writing $var to " . Configuration::$storage_dir . "\n");
             $this->label_values = [];
         } else {
             // Raise exception.
@@ -33,3 +33,5 @@ class Metric
         return $this;
     }
 }
+
+// vim:sw=4 ts=4 et

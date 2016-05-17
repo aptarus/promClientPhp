@@ -2,16 +2,26 @@
 
 namespace Aptarus\PromClient;
 
-class Counter extends Metric
+class Gauge extends Metric
 {
     public function __construct($var, $help = "", $labels = [])
     {
-        parent::__construct('counter', $var, $help, $labels);
+        parent::__construct('gauge', $var, $help, $labels);
     }
 
     public function inc($value = 1)
     {
         $this->_metric_inc($value);
+    }
+
+    public function dec($value = 1)
+    {
+        $this->_metric_dec($value);
+    }
+
+    public function set($value)
+    {
+        $this->_metric_set($value);
     }
 
     public function labels($label_values)
