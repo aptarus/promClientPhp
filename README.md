@@ -23,6 +23,23 @@ $ composer require aptarus/promClientPhp
 
 ## Usage
 
+Add this to `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/aptarus/promClientPhp.git"
+        }
+    ],
+    "require": {
+        "php" : "~5.5|~7.0",
+        "aptarus/promClientPhp": "dev-master"
+    }
+}
+```
+
 Client:
 
 ``` php
