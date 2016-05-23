@@ -17,7 +17,7 @@ class Metric
         $this->_fs_set_meta();
     }
 
-    protected function _metric_inc($label_values, $var_value)
+    protected function _metric_inc($var_value)
     {
         if (count($this->label_values) == count($this->labels))
         {
@@ -35,7 +35,7 @@ class Metric
         }
     }
 
-    protected function _metric_set($label_values, $var_value)
+    protected function _metric_set($var_value)
     {
         if (count($this->label_values) == count($this->labels))
         {
