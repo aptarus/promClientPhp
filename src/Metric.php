@@ -60,10 +60,14 @@ class Metric
             array('dir' => Configuration::$storage_dir));
     }
 
+    /*
+     * Store the meta data for a variable. The resulting storage looks
+     * like: var -> [ last update time, type of var, help string ]
+     */
     private function _fs_set_meta()
     {
         $this->meta->set($this->var,
-           array($this->typ, $this->help));
+           array(time(), $this->typ, $this->help));
     }
 
     private function _fs_get_meta()
@@ -71,10 +75,14 @@ class Metric
         return $this->meta->get($this->var);
     }
 
+    /*
+     * Store a variable. The resulting storage looks
+     * like: var + labels -> [ last update time, var value, label values ]
+     */
     private function _fs_set($var_value)
     {
         $this->metrics->set(serialize(array($this->var, $this->labels)),
-           array($var_value, $this->label_values));
+           array(time(), $var_value, $this->label_values));
     }
 
     private function _fs_get()
