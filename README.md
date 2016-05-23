@@ -52,23 +52,30 @@ changed recently.
 composer test
 ```
 
-Preparing to test while developing:
+### Test prerequisites
+
+Need to install the following on Ubuntu for testing to work:
 
 ```bash
 sudo apt-get install php-codesniffer phpunit
-```
-
-Testing while developing:
-
-```bash
-phpcs --standard=psr2 src/
-phpunit --coverage-text --coverage-clover=coverage.clover
 ```
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md)
 for details.
+
+### Contribution notes
+
+This package is based on [the PHP league](http://thephpleague.com/)'s
+[skeleton](https://github.com/thephpleague/skeleton). From time to
+time it's not a bad idea to try merging in the skeleton project in case
+there are new bits of the php ecosystem this project might benefit from.
+To do this just run:
+
+```bash
+git fetch git@github.com:thephpleague/skeleton.git
+```
 
 ## Security
 
@@ -98,4 +105,4 @@ information.
 [link-code-quality]: https://scrutinizer-ci.com/g/aptarus/promClientPhp
 [link-downloads]: https://packagist.org/packages/aptarus/promClientPhp
 [link-author]: https://github.com/lyda
-[link-contributors]: ../../contributors
+[link-contributors]: https://github.com/aptarus/promClientPhp/graphs/contributors
