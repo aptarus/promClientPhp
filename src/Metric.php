@@ -87,7 +87,8 @@ class Metric
 
     private function _fs_get()
     {
-        return $this->metrics->get(serialize(array($this->var, $this->labels)));
+        return array_slice($this->metrics->get(
+            serialize(array($this->var, $this->labels))), 1);
     }
 }
 
