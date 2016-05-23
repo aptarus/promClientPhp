@@ -2,10 +2,10 @@
 
 namespace Aptarus\PromClient;
 
-use Flintstone\Flintstone;
-
 class Metric
 {
+    static $metrics_db = null;
+
     public function __construct($typ, $var, $help = "", $labels = [])
     {
         $this->typ = $typ;
@@ -13,22 +13,51 @@ class Metric
         $this->help = $help;
         $this->labels = $labels;
         $this->label_values = [];
-        $this->_fs_open();
-        $this->_fs_set_meta();
+        if (!$metrics_db)
+        {
+            $file_existed = file_exists(Configuration::$storage_dir
+                . '/metrics.db');
+            $metrics_db = new PDO('sqlite:' . Configuration::$storage_dir
+                . '/metrics.db');
+            if (!$file_existed)
+            {
+                $metrics_db->exec(
+                    'CREATE TABLE IF NOT EXISTS meta (
+                        var VARCHAR(128) UNIQUE ON CONFLICT REPLACE,
+                        typ VARCHAR(20),
+                        help VARCHAR(128),
+                        changed TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)');
+                $metrics_db->exec(
+                    'CREATE TABLE IF NOT EXISTS metrics (
+                        var VARCHAR(128),
+                        value VARCHAR(20),
+                        labels VARCHAR(256),
+                        label_values VARCHAR(256),
+                        changed TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                        UNIQUE (var, labels) ON CONFLICT REPLACE)');
+            }
+            $metrics_db->exec(
+                'INSERT INTO meta (var, typ, help) VALUES (?, ?, ?)',
+                $this->var, $this->typ, $this->help);
+        }
     }
 
     protected function _metric_inc($var_value)
     {
         if (count($this->label_values) == count($this->labels))
         {
-            $v = $this->_fs_get();
-            if (!$v)
-            {
-                $v = array($var_value, $label_values);
-            } else {
-                $v = array($v[0] + $var_value, $label_values);
-            }
-            $this->_fs_set($var_value);
+            $metrics_db->exec(
+                'INSERT OR IGNORE INTO metrics (var,labels,value,label_values)
+                        VALUES (?, ?, ?, ?)',
+                0, serialize($this->label_values),
+                $this->var, serialize($this->labels));
+            $metrics_db->exec(
+                'UPDATE metrics
+                    SET value = value + ?,
+                        label_values = ?
+                 WHERE var = ? AND labels = ?', $var_value,
+                 serialize($this->label_values), $this->var,
+                 serialize($this->labels));
             $this->label_values = [];
         } else {
             // Raise exception.
@@ -39,7 +68,11 @@ class Metric
     {
         if (count($this->label_values) == count($this->labels))
         {
-            $this->_fs_set($var_value);
+            $metrics_db->exec(
+                'INSERT INTO metrics (value, label_values, var, labels)
+                        VALUES (?, ?, ?, ?)',
+                $var_value, serialize($this->label_values),
+                $this->var, serialize($this->labels));
             $this->label_values = [];
         } else {
             // Raise exception.
@@ -50,45 +83,6 @@ class Metric
     {
         $this->label_values = $label_values;
         return $this;
-    }
-
-    private function _fs_open()
-    {
-        $this->meta = new Flintstone('meta',
-            array('dir' => Configuration::$storage_dir));
-        $this->metrics = new Flintstone('metrics',
-            array('dir' => Configuration::$storage_dir));
-    }
-
-    /*
-     * Store the meta data for a variable. The resulting storage looks
-     * like: var -> [ last update time, type of var, help string ]
-     */
-    private function _fs_set_meta()
-    {
-        $this->meta->set($this->var,
-           array(time(), $this->typ, $this->help));
-    }
-
-    private function _fs_get_meta()
-    {
-        return $this->meta->get($this->var);
-    }
-
-    /*
-     * Store a variable. The resulting storage looks
-     * like: var + labels -> [ last update time, var value, label values ]
-     */
-    private function _fs_set($var_value)
-    {
-        $this->metrics->set(serialize(array($this->var, $this->labels)),
-           array(time(), $var_value, $this->label_values));
-    }
-
-    private function _fs_get()
-    {
-        return array_slice($this->metrics->get(
-            serialize(array($this->var, $this->labels))), 1);
     }
 }
 
