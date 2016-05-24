@@ -74,7 +74,7 @@ composer test
 Need to install the following on Ubuntu for testing to work:
 
 ```bash
-sudo apt-get install php-codesniffer phpunit
+sudo apt-get install php-codesniffer phpunit php5-sqlite
 ```
 
 ## Contributing
