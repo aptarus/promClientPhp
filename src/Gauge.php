@@ -4,9 +4,10 @@ namespace Aptarus\PromClient;
 
 class Gauge extends Metric
 {
-    public function __construct($var, $help = "", $labels = [])
+    public function __construct($var, $help = "",
+                                $labels = null, $label_values = null)
     {
-        parent::__construct('gauge', $var, $help, $labels);
+        parent::__construct('gauge', $var, $help, $labels, $label_values);
     }
 
     public function inc($value = 1)
@@ -22,12 +23,6 @@ class Gauge extends Metric
     public function set($value)
     {
         $this->_metric_set($value);
-    }
-
-    public function labels($label_values)
-    {
-        $this->_metric_labels($label_values);
-        return $this;
     }
 
     public function set_to_current_time()
