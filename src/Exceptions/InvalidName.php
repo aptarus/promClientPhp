@@ -2,7 +2,7 @@
 
 namespace Aptarus\PromClient\Exceptions;
 
-class LabelValueMismatch extends \Exception
+class InvalidName extends \Exception
 {
 }
 

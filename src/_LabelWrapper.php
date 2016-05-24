@@ -6,13 +6,23 @@ class _LabelWrapper
 {
     public function __construct($metric_class, $var, $help, $labels)
     {
+        if (!preg_match('/^[a-zA-Z_:][a-zA-Z0-9_:]*$/', $var))
+        {
+            throw new Exceptions\InvalidName(sprintf(
+                "Metric name '%s' is invalid", $var));
+        }
+        foreach ($labels as $label)
+        {
+            if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $label)
+                or substr($label, 0, 4) === "__")
+            {
+                throw new Exceptions\InvalidName(sprintf(
+                    "Label name '%s' is invalid", $label));
+            }
+        }
         $this->metric_class = "Aptarus\\PromClient\\" . $metric_class;
-        // TODO: Check var name is valid.
-        //       See: https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels
         $this->var = $var;
         $this->help = $help;
-        // TODO: Check label names are valid.
-        //       See: https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels
         $this->labels = $labels;
     }
 
@@ -20,7 +30,6 @@ class _LabelWrapper
     {
         if (count($this->labels) != count($label_values))
         {
-            // TODO: Make exception classes.
             throw new Exceptions\LabelValueMismatch(sprintf(
                 "labels/value counts don't match (%d/%d)",
                 count($this->labels), count($label_values)));

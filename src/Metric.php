@@ -10,6 +10,11 @@ class Metric
 
     public function __construct($typ, $var, $help, $labels, $label_values)
     {
+        if (!preg_match('/^[a-zA-Z_:][a-zA-Z0-9_:]*$/', $var))
+        {
+            throw new Exceptions\InvalidName(sprintf(
+                "Metric name '%s' invalid", $var));
+        }
         $this->typ = $typ;
         $this->var = $var;
         $this->help = $help;
