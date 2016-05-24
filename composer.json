@@ -33,6 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Aptarus\\PromClient\\": "src",
             "Aptarus\\PromClientTests\\": "tests"
         }
     },

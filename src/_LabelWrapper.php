@@ -21,7 +21,9 @@ class _LabelWrapper
         if (count($this->labels) != count($label_values))
         {
             // TODO: Make exception classes.
-            throw new Exception("labels don't match.");
+            throw new \Exception(sprintf(
+                "labels/value counts don't match (%d/%d)",
+                count($this->labels), count($label_values)));
         }
         return new $this->metric_class($this->var, $this->help,
                                        $this->labels, $label_values);
