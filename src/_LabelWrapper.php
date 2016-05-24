@@ -6,7 +6,7 @@ class _LabelWrapper
 {
     public function __construct($metric_class, $var, $help, $labels)
     {
-        $this->metric_class = $metric_class;
+        $this->metric_class = "Aptarus\\PromClient\\" . $metric_class;
         // TODO: Check var name is valid.
         //       See: https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels
         $this->var = $var;
