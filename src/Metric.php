@@ -8,13 +8,13 @@ class Metric
 {
     static $metrics_db = null;
 
-    public function __construct($typ, $var, $help = "", $labels = [])
+    public function __construct($typ, $var, $help, $labels, $label_values)
     {
         $this->typ = $typ;
         $this->var = $var;
         $this->help = $help;
         $this->labels = $labels;
-        $this->label_values = [];
+        $this->label_values = $label_values;
         if (!self::$metrics_db)
         {
             $file_existed = file_exists(Configuration::$storage_dir
@@ -48,47 +48,31 @@ class Metric
 
     protected function _metric_inc($var_value)
     {
-        if (count($this->label_values) == count($this->labels))
-        {
-            $sth = self::$metrics_db->
-                prepare('INSERT OR IGNORE INTO metrics
-                (var,labels,value,label_values) VALUES (?, ?, ?, ?)');
-            $sth->execute(array(0, serialize($this->label_values),
-                $this->var, serialize($this->labels)));
-            $sth = self::$metrics_db->
-                prepare('UPDATE metrics
-                            SET value = value + ?,
-                                label_values = ?
-                         WHERE var = ? AND labels = ?');
-            $sth->execute(array($var_value, serialize($this->label_values),
-                          $this->var, serialize($this->labels)));
-            $this->label_values = [];
-        } else {
-            // Raise exception.
-        }
+        $sth = self::$metrics_db->
+            prepare('INSERT OR IGNORE INTO metrics
+            (var,labels,value,label_values) VALUES (?, ?, ?, ?)');
+        $sth->execute(array(0, serialize($this->label_values),
+            $this->var, serialize($this->labels)));
+        $sth = self::$metrics_db->
+            prepare('UPDATE metrics
+                        SET value = value + ?,
+                            label_values = ?
+                     WHERE var = ? AND labels = ?');
+        $sth->execute(array($var_value, serialize($this->label_values),
+                      $this->var, serialize($this->labels)));
+        $this->label_values = [];
     }
 
     protected function _metric_set($var_value)
     {
-        if (count($this->label_values) == count($this->labels))
-        {
-            $sth = self::$metrics_db->
-                prepare(
-                'INSERT INTO metrics (value, label_values, var, labels)
-                                     VALUES (?, ?, ?, ?)');
+        $sth = self::$metrics_db->
+            prepare(
+            'INSERT INTO metrics (value, label_values, var, labels)
+                                 VALUES (?, ?, ?, ?)');
 
-            $sth->execute(array($var_value, serialize($this->label_values),
-                $this->var, serialize($this->labels)));
-            $this->label_values = [];
-        } else {
-            // Raise exception.
-        }
-    }
-
-    protected function _metric_labels($label_values)
-    {
-        $this->label_values = $label_values;
-        return $this;
+        $sth->execute(array($var_value, serialize($this->label_values),
+            $this->var, serialize($this->labels)));
+        $this->label_values = [];
     }
 }
 
