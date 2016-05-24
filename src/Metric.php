@@ -2,6 +2,8 @@
 
 namespace Aptarus\PromClient;
 
+use PDO;
+
 class Metric
 {
     static $metrics_db = null;
