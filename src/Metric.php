@@ -50,7 +50,7 @@ class Metric
     {
         $sth = self::$metrics_db->
             prepare('INSERT OR IGNORE INTO metrics
-            (var,labels,value,label_values) VALUES (?, ?, ?, ?)');
+            (value,label_values,var,labels) VALUES (?, ?, ?, ?)');
         $sth->execute(array(0, serialize($this->label_values),
             $this->var, serialize($this->labels)));
         $sth = self::$metrics_db->
