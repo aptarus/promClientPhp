@@ -3,6 +3,7 @@
 namespace Aptarus\PromClientTest;
 
 use Aptarus\PromClient;
+use Aptarus\PromClient\Exceptions;
 
 class PromClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,6 +25,20 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Aptarus\\PromClient\\Counter", get_class($c));
         $c->inc();
         // TODO: read counter and check that it's incremented.
+    }
+
+    /**
+     * @expectedException \Aptarus\PromClient\Exceptions\LabelValueMismatch
+     * @expectedExceptionMessageRegExp #.*(2/3)#
+     */
+
+    public function testCounterBadLabel()
+    {
+        $c = PromClient\Counter('test_counter', 'Test counter',
+                                array('l1', 'l2'));
+        $this->assertEquals("Aptarus\\PromClient\\_LabelWrapper",
+            get_class($c));
+        $cl = $c->labels(array(1, 2, 3));
     }
 
     public function testCounterLabel()
@@ -83,7 +98,6 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
     protected function onNotSuccessfulTest(\Exception $e)
     {
         self::$PromClient_delete = false;
-        fwrite(STDOUT, 'Not deleting data/metrics.db due to test failure.');
         throw $e;
     }
 

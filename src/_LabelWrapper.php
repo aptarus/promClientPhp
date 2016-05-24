@@ -21,7 +21,7 @@ class _LabelWrapper
         if (count($this->labels) != count($label_values))
         {
             // TODO: Make exception classes.
-            throw new \Exception(sprintf(
+            throw new Exceptions\LabelValueMismatch(sprintf(
                 "labels/value counts don't match (%d/%d)",
                 count($this->labels), count($label_values)));
         }
