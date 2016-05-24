@@ -21,6 +21,8 @@ class Metric
                 . '/metrics.db');
             self::$metrics_db = new PDO('sqlite:' . Configuration::$storage_dir
                 . '/metrics.db');
+            self::$metrics_db->setAttribute(PDO::ATTR_ERRMODE,
+                                            PDO::ERRMODE_EXCEPTION);
             if (!$file_existed)
             {
                 self::$metrics_db->exec(
@@ -38,9 +40,9 @@ class Metric
                         changed TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                         UNIQUE (var, labels) ON CONFLICT REPLACE)');
             }
-            self::$metrics_db->exec(
-                'INSERT INTO meta (var, typ, help) VALUES (?, ?, ?)',
-                $this->var, $this->typ, $this->help);
+            $sth = self::$metrics_db->
+                prepare('INSERT INTO meta (var, typ, help) VALUES (?, ?, ?)');
+            $sth->execute(array($this->var, $this->typ, $this->help));
         }
     }
 
@@ -48,18 +50,18 @@ class Metric
     {
         if (count($this->label_values) == count($this->labels))
         {
-            self::$metrics_db->exec(
-                'INSERT OR IGNORE INTO metrics (var,labels,value,label_values)
-                        VALUES (?, ?, ?, ?)',
-                0, serialize($this->label_values),
-                $this->var, serialize($this->labels));
-            self::$metrics_db->exec(
-                'UPDATE metrics
-                    SET value = value + ?,
-                        label_values = ?
-                 WHERE var = ? AND labels = ?', $var_value,
-                 serialize($this->label_values), $this->var,
-                 serialize($this->labels));
+            $sth = self::$metrics_db->
+                prepare('INSERT OR IGNORE INTO metrics
+                (var,labels,value,label_values) VALUES (?, ?, ?, ?)');
+            $sth->execute(array(0, serialize($this->label_values),
+                $this->var, serialize($this->labels)));
+            $sth = self::$metrics_db->
+                prepare('UPDATE metrics
+                            SET value = value + ?,
+                                label_values = ?
+                         WHERE var = ? AND labels = ?');
+            $sth->execute(array($var_value, serialize($this->label_values),
+                          $this->var, serialize($this->labels)));
             $this->label_values = [];
         } else {
             // Raise exception.
@@ -70,11 +72,13 @@ class Metric
     {
         if (count($this->label_values) == count($this->labels))
         {
-            self::$metrics_db->exec(
+            $sth = self::$metrics_db->
+                prepare(
                 'INSERT INTO metrics (value, label_values, var, labels)
-                        VALUES (?, ?, ?, ?)',
-                $var_value, serialize($this->label_values),
-                $this->var, serialize($this->labels));
+                                     VALUES (?, ?, ?, ?)');
+
+            $sth->execute(array($var_value, serialize($this->label_values),
+                $this->var, serialize($this->labels)));
             $this->label_values = [];
         } else {
             // Raise exception.
