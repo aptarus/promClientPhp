@@ -29,6 +29,11 @@ class Gauge extends Metric
         $this->_metric_labels($label_values);
         return $this;
     }
+
+    public function set_to_current_time()
+    {
+        $this->_metric_set(time());
+    }
 }
 
 // vim:sw=4 ts=4 et
