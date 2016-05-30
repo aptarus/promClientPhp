@@ -29,7 +29,10 @@
         "psr-4": {
             "Aptarus\\PromClient\\": "src"
         },
-        "files": ["src/Factories.php"]
+        "files": [
+            "src/Factories.php",
+            "src/Utility.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
