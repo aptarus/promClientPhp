@@ -4,6 +4,9 @@ namespace Aptarus\PromClient;
 
 class Configuration
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
         // Block it from being instantiated.

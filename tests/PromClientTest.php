@@ -31,14 +31,42 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Aptarus\PromClient\Exceptions\LabelValueMismatch
      * @expectedExceptionMessageRegExp #.*(2/3)#
      */
-
-    public function testCounterBadLabel()
+    public function testBadLabel()
     {
         $c = PromClient\Counter('test_counter', 'Test counter',
                                 array('l1', 'l2'));
         $this->assertEquals("Aptarus\\PromClient\\_LabelWrapper",
             get_class($c));
         $cl = $c->labels(array(1, 2, 3));
+    }
+
+    /**
+     * @expectedException \Aptarus\PromClient\Exceptions\InvalidName
+     * @expectedExceptionMessageRegExp #Metric name '1bad_metric' is invalid#
+     */
+    public function testBadMetricWithoutLabelsName()
+    {
+        $c = PromClient\Counter('1bad_metric', 'Test counter');
+    }
+
+    /**
+     * @expectedException \Aptarus\PromClient\Exceptions\InvalidName
+     * @expectedExceptionMessageRegExp #Metric name '1bad_metric' is invalid#
+     */
+    public function testBadMetricWithLabelsName()
+    {
+        $c = PromClient\Counter('1bad_metric', 'Test counter',
+                                array('l1', 'l2'));
+    }
+
+    /**
+     * @expectedException \Aptarus\PromClient\Exceptions\InvalidName
+     * @expectedExceptionMessageRegExp #Label name '1bad_label' is invalid#
+     */
+    public function testBadLabelName()
+    {
+        $c = PromClient\Gauge('test_counter', 'Test gauge',
+                                array('1bad_label', 'l2'));
     }
 
     public function testCounterLabel()
