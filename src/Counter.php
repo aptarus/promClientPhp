@@ -4,9 +4,12 @@ namespace Aptarus\PromClient;
 
 class Counter extends Metric
 {
-    public function __construct($var, $help = "",
-                                $labels = null, $label_values = null)
-    {
+    public function __construct(
+        $var,
+        $help = "",
+        $labels = null,
+        $label_values = nulli
+    ) {
         parent::__construct('counter', $var, $help, $labels, $label_values);
     }
 

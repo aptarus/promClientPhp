@@ -13,7 +13,6 @@ class Configuration
     }
 
     public static $storage_dir = '/var/lib/promClientPhp/default';
-
 }
 
 // vim:sw=4 ts=4 et
