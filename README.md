@@ -120,7 +120,7 @@ information.
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/aptarus/promClientPhp.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/aptarus/promClientPhp.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/aptarus/promClientPhp
+[link-packagist]: https://packagist.org/packages/aptarus/prom-client-php
 [link-travis]: https://travis-ci.org/aptarus/promClientPhp
 [link-scrutinizer]: https://scrutinizer-ci.com/g/aptarus/promClientPhp/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/aptarus/promClientPhp
