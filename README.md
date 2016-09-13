@@ -10,8 +10,12 @@
 
 This library allows users to record and export stats about a program
 in a way that [Prometheus](https://prometheus.io/) can make use of.
-Statistics are stored locally in the filesystem; no additional service
-is required to record the statistics.
+Statistics are stored locally in the filesystem using sqlite; no
+additional service is required to record the statistics.
+
+Note that this is likely only really useful for a PHP site with low usage.
+Once you get more than a 2 or 3 QPS you're likely looking at needing a
+different library for this.
 
 ## Install
 
