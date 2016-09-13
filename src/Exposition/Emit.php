@@ -33,41 +33,40 @@ class Emit
             ->prepare('SELECT labels, value, label_values
                          FROM metrics where var = ? ORDER BY var ASC');
 
-        foreach (array_keys($meta) as $var)
-        {
+        foreach (array_keys($meta) as $var) {
             $this->metrics[$var] = $sth->execute(array($var))
                 ->fetchAll(PDO::FETCH_UNIQUE);
         }
     }
 
+    // @codingStandardsIgnoreStart
     public function Text()
     {
+        // @codingStandardsIgnoreEnd
         // Spew metrics.
         header('Content-Type: text/plain; version=0.0.4');
 
-        foreach ($this->meta as $var)
-        {
+        foreach ($this->meta as $var) {
             print("# HELP $var " + $this->meta[$var]['help'] + "\n");
             print("# TYPE $var " + $this->meta[$var]['typ'] + "\n");
-            foreach ($this->metrics[$var] as $labels)
-            {
+            foreach ($this->metrics[$var] as $labels) {
                 $labels_quoted = '';
                 $lnames = unserialize($labels);
-                if ($lnames)
-                {
+                if ($lnames) {
                     $lvalues = unserialize(
-                        $this->metrics[$var][$labels]['label_values']);
+                        $this->metrics[$var][$labels]['label_values']
+                    );
                     $lnv = $array_combine($lnames, $lvalues);
                     $lnv_quoted = array();
-                    foreach ($lnv as $l)
-                    {
+                    foreach ($lnv as $l) {
                         $lnv_quoted[] = $l + '="' + $lvalues[$l] + '"';
                     }
                     $labels_quoted = '{' + join(',', $lnv_quoted) + '}';
-
                 }
-                print("$var$plabels_quoted "
-                    + $this->metrics[$var][$labels]['value'] + "\n");
+                print(
+                    "$var$plabels_quoted "
+                    + $this->metrics[$var][$labels]['value'] + "\n"
+                );
             }
         }
     }

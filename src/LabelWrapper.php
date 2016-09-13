@@ -2,7 +2,7 @@
 
 namespace Aptarus\PromClient;
 
-class _LabelWrapper
+class LabelWrapper
 {
     public function __construct($metric_class, $var, $help, $labels)
     {

@@ -6,7 +6,7 @@ function Counter($var, $help = "", $labels = null)
 {
     if ($labels)
     {
-        return new _LabelWrapper('Counter', $var, $help, $labels);
+        return new LabelWrapper('Counter', $var, $help, $labels);
     } else {
         return new Counter($var, $help);
     }
@@ -16,7 +16,7 @@ function Gauge($var, $help = "", $labels = null)
 {
     if ($labels)
     {
-        return new _LabelWrapper('Gauge', $var, $help, $labels);
+        return new LabelWrapper('Gauge', $var, $help, $labels);
     } else {
         return new Gauge($var, $help);
     }
