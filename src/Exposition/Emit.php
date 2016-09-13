@@ -3,7 +3,7 @@
 namespace Aptarus\PromClient\Exposition;
 
 use PDO;
-use Aptarus\PromClient\Utility;
+use function Aptarus\PromClient\Utility\PromClientOpenDB;
 
 class Emit
 {
@@ -55,7 +55,7 @@ class Emit
                 if ($lnames)
                 {
                     $lvalues = unserialize(
-                        $this->metrics[$var][$labels]['label_values']));
+                        $this->metrics[$var][$labels]['label_values']);
                     $lnv = $array_combine($lnames, $lvalues);
                     $lnv_quoted = array();
                     foreach ($lnv as $l)
@@ -67,6 +67,7 @@ class Emit
                 }
                 print("$var$plabels_quoted "
                     + $this->metrics[$var][$labels]['value'] + "\n");
+            }
         }
     }
 }

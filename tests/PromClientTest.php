@@ -4,6 +4,7 @@ namespace Aptarus\PromClientTest;
 
 use Aptarus\PromClient;
 use Aptarus\PromClient\Exceptions;
+use Aptarus\PromClient\Exposition;
 
 class PromClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -131,6 +132,8 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
 
     public static function tearDownAfterClass()
     {
+        $emit = new Exposition\Emit();
+        print $emit->Text();
         if (self::$PromClient_delete)
         {
             file_exists('data/metrics.db') and unlink('data/metrics.db');

@@ -3,7 +3,6 @@
 namespace Aptarus\PromClient;
 
 use PDO;
-use Aptarus\PromClient\Utility;
 
 class Metric
 {

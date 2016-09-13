@@ -1,5 +1,5 @@
 {
-    "name": "aptarus/promClientPhp",
+    "name": "aptarus/prom-client-php",
     "type": "library",
     "description": "Prometheus client library for PHP.",
     "keywords": [
