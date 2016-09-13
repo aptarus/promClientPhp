@@ -3,6 +3,7 @@
 namespace Aptarus\PromClient;
 
 use PDO;
+use Aptarus\PromClient\Utility as U;
 
 class Metric
 {
@@ -22,7 +23,7 @@ class Metric
         $this->label_values = $label_values;
         if (!self::$metrics_db)
         {
-            self::$metrics_db = PromClientOpenDB(Configuration::$storage_dir);
+            self::$metrics_db = U\PromClientOpenDB(Configuration::$storage_dir);
         }
         $sth = self::$metrics_db->
             prepare('INSERT INTO meta (var, typ, help) VALUES (?, ?, ?)');

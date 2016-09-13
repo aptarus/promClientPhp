@@ -3,13 +3,14 @@
 namespace Aptarus\PromClient\Exposition;
 
 use PDO;
-use function Aptarus\PromClient\Utility\PromClientOpenDB;
+use Aptarus\PromClient\Utility as U;
+use Aptarus\PromClient\Configuration as Configuration;
 
 class Emit
 {
     public function __construct()
     {
-        $metrics_db = PromClientOpenDB(Configuration::$storage_dir);
+        $metrics_db = U\PromClientOpenDB(Configuration::$storage_dir);
 
         // Clean up the DB first.
         $julian_day = unixtojd();

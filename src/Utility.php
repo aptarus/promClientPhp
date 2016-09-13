@@ -1,6 +1,6 @@
 <?php
 
-namespace Aptarus\PromClient;
+namespace Aptarus\PromClient\Utility;
 
 use PDO;
 
