@@ -7,7 +7,7 @@ use Aptarus\PromClient\Utility as U;
 
 class Metric
 {
-    static $metrics_db = null;
+    protected static $metrics_db = null;
 
     public function __construct($typ, $var, $help, $labels, $label_values)
     {

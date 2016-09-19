@@ -33,10 +33,15 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLabel()
     {
-        $c = PromClient\Counter('test_counter', 'Test counter',
-                                array('l1', 'l2'));
-        $this->assertEquals("Aptarus\\PromClient\\_LabelWrapper",
-            get_class($c));
+        $c = PromClient\Counter(
+            'test_counter',
+            'Test counter',
+            array('l1', 'l2')
+        );
+        $this->assertEquals(
+            "Aptarus\\PromClient\\_LabelWrapper",
+            get_class($c)
+        );
         $cl = $c->labels(array(1, 2, 3));
     }
 
@@ -55,8 +60,11 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadMetricWithLabelsName()
     {
-        $c = PromClient\Counter('1bad_metric', 'Test counter',
-                                array('l1', 'l2'));
+        $c = PromClient\Counter(
+            '1bad_metric',
+            'Test counter',
+            array('l1', 'l2')
+        );
     }
 
     /**
@@ -65,16 +73,24 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLabelName()
     {
-        $c = PromClient\Gauge('test_counter', 'Test gauge',
-                                array('1bad_label', 'l2'));
+        $c = PromClient\Gauge(
+            'test_counter',
+            'Test gauge',
+            array('1bad_label', 'l2')
+        );
     }
 
     public function testCounterLabel()
     {
-        $c = PromClient\Counter('test_counter', 'Test counter',
-                                array('l1', 'l2'));
-        $this->assertEquals("Aptarus\\PromClient\\_LabelWrapper",
-            get_class($c));
+        $c = PromClient\Counter(
+            'test_counter',
+            'Test counter',
+            array('l1', 'l2')
+        );
+        $this->assertEquals(
+            "Aptarus\\PromClient\\_LabelWrapper",
+            get_class($c)
+        );
         $cl = $c->labels(array(1, 2));
         $this->assertEquals("Aptarus\\PromClient\\Counter", get_class($cl));
         return $cl;
@@ -105,10 +121,15 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGaugeLabel()
     {
-        $g = PromClient\Gauge('test_gauge', 'Test gauge',
-                                array('l1', 'l2'));
-        $this->assertEquals("Aptarus\\PromClient\\_LabelWrapper",
-            get_class($g));
+        $g = PromClient\Gauge(
+            'test_gauge',
+            'Test gauge',
+            array('l1', 'l2')
+        );
+        $this->assertEquals(
+            "Aptarus\\PromClient\\_LabelWrapper",
+            get_class($g)
+        );
         $gl = $g->labels(array(1, 2));
         $this->assertEquals("Aptarus\\PromClient\\Gauge", get_class($gl));
         return $gl;

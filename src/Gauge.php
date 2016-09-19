@@ -29,8 +29,10 @@ class Gauge extends Metric
         $this->metricSet($value);
     }
 
+    // @codingStandardsIgnoreStart
     public function set_to_current_time()
     {
+        // @codingStandardsIgnoreEnd
         $this->metricSet(time());
     }
 }
