@@ -7,7 +7,6 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-
 This library allows users to record and export stats about a program
 in a way that [Prometheus](https://prometheus.io/) can make use of.
 Statistics are stored locally in the filesystem using sqlite; no
