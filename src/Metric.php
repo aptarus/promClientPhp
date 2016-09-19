@@ -11,18 +11,18 @@ class Metric
 
     public function __construct($typ, $var, $help, $labels, $label_values)
     {
-        if (!preg_match('/^[a-zA-Z_:][a-zA-Z0-9_:]*$/', $var))
-        {
+        if (!preg_match('/^[a-zA-Z_:][a-zA-Z0-9_:]*$/', $var)) {
             throw new Exceptions\InvalidName(sprintf(
-                "Metric name '%s' is invalid", $var));
+                "Metric name '%s' is invalid",
+                $var
+            ));
         }
         $this->typ = $typ;
         $this->var = $var;
         $this->help = $help;
         $this->labels = $labels;
         $this->label_values = $label_values;
-        if (!self::$metrics_db)
-        {
+        if (!self::$metrics_db) {
             self::$metrics_db = U\PromClientOpenDB(Configuration::$storage_dir);
         }
         $sth = self::$metrics_db->
@@ -30,7 +30,7 @@ class Metric
         $sth->execute(array($this->var, $this->typ, $this->help));
     }
 
-    protected function _metric_inc($var_value)
+    protected function metricInc($var_value)
     {
         $sth = self::$metrics_db->
             prepare('INSERT OR IGNORE INTO metrics
@@ -47,12 +47,13 @@ class Metric
         $this->label_values = [];
     }
 
-    protected function _metric_set($var_value)
+    protected function metricSet($var_value)
     {
         $sth = self::$metrics_db->
             prepare(
-            'INSERT INTO metrics (value, label_values, var, labels)
-                                 VALUES (?, ?, ?, ?)');
+                'INSERT INTO metrics (value, label_values, var, labels)
+                        VALUES (?, ?, ?, ?)'
+            );
 
         $sth->execute(array($var_value, serialize($this->label_values),
             $this->var, serialize($this->labels)));

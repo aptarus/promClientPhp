@@ -33,9 +33,10 @@ class Emit
             ->prepare('SELECT labels, value, label_values
                          FROM metrics where var = ? ORDER BY var ASC');
 
-        foreach (array_keys($meta) as $var) {
-            $this->metrics[$var] = $sth->execute(array($var))
-                ->fetchAll(PDO::FETCH_UNIQUE);
+        foreach (array_keys($this->meta) as $var) {
+            if ($sth->execute(array($var))) {
+                $this->metrics[$var] = $sth->fetchAll(PDO::FETCH_UNIQUE);
+            }
         }
     }
 

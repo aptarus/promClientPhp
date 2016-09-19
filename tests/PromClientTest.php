@@ -13,8 +13,7 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         file_exists('data/metrics.db') and unlink('data/metrics.db');
-        if (!is_dir('data'))
-        {
+        if (!is_dir('data')) {
             mkdir('data');
         }
         PromClient\Configuration::$storage_dir = 'data';
@@ -130,12 +129,14 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
         throw $e;
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public static function tearDownAfterClass()
     {
         $emit = new Exposition\Emit();
         print $emit->Text();
-        if (self::$PromClient_delete)
-        {
+        if (self::$PromClient_delete) {
             file_exists('data/metrics.db') and unlink('data/metrics.db');
         }
     }

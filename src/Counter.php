@@ -15,7 +15,7 @@ class Counter extends Metric
 
     public function inc($value = 1)
     {
-        $this->_metric_inc($value);
+        $this->metricInc($value);
     }
 }
 

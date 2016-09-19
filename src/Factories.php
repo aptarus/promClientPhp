@@ -4,8 +4,7 @@ namespace Aptarus\PromClient;
 
 function Counter($var, $help = "", $labels = null)
 {
-    if ($labels)
-    {
+    if ($labels) {
         return new LabelWrapper('Counter', $var, $help, $labels);
     } else {
         return new Counter($var, $help);
@@ -14,8 +13,7 @@ function Counter($var, $help = "", $labels = null)
 
 function Gauge($var, $help = "", $labels = null)
 {
-    if ($labels)
-    {
+    if ($labels) {
         return new LabelWrapper('Gauge', $var, $help, $labels);
     } else {
         return new Gauge($var, $help);
