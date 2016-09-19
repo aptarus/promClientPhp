@@ -112,12 +112,12 @@ kevin.lyda@aptarus.com instead of using the issue tracker.
 The MIT License (MIT). Please see [License File](LICENSE.md) for more
 information.
 
-[ico-version]: https://img.shields.io/packagist/v/aptarus/promClientPhp.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/aptarus/prom-client-php.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/aptarus/promClientPhp/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/aptarus/promClientPhp.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/aptarus/promClientPhp.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/aptarus/promClientPhp.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/aptarus/prom-client-php.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/aptarus/prom-client-php
 [link-travis]: https://travis-ci.org/aptarus/promClientPhp
