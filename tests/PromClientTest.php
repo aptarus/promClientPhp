@@ -6,7 +6,44 @@ use Aptarus\PromClient;
 use Aptarus\PromClient\Exceptions;
 use Aptarus\PromClient\Exposition;
 
-class PromClientTest extends \PHPUnit_Framework_TestCase
+// @codingStandardsIgnoreStart
+if (version_compare(\PHPUnit_Runner_Version::id(), '5.0.0', '>=')) {
+    /**
+     * Needed to save sqlite db for inspection on a failed test in PHPUnit 5+.
+     *
+     * See https://github.com/minkphp/Mink/pull/687/files for inspiration.
+     *
+     * @internal
+     */
+    class SaveDBOnFailure extends \PHPUnit_Framework_TestCase
+    {
+        protected static $PromClient_delete = true;
+
+        protected function onNotSuccessfulTest($e)
+        {
+            self::$PromClient_delete = false;
+            throw $e;
+        }
+    }
+} else {
+    /**
+     * Needed to save sqlite db for inspection on a failed test in PHPUnit 4.
+     *
+     * @internal
+     */
+    class SaveDBOnFailure extends \PHPUnit_Framework_TestCase
+    {
+        protected static $PromClient_delete = true;
+
+        protected function onNotSuccessfulTest(\Exception $e)
+        {
+            self::$PromClient_delete = false;
+            throw $e;
+        }
+    }
+}
+
+class PromClientTest extends SaveDBOnFailure
 {
     public static $PromClient_delete = true;
 
@@ -144,12 +181,6 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
         // TODO: read gauge and check that it's incremented.
     }
 
-    protected function onNotSuccessfulTest(\Exception $e)
-    {
-        self::$PromClient_delete = false;
-        throw $e;
-    }
-
     /**
      * @runInSeparateProcess
      */
@@ -162,5 +193,6 @@ class PromClientTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
+// @codingStandardsIgnoreEnd
 
 // vim:sw=4 ts=4 et
